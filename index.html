@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Bijoy and Mauli's London</title>
+	<script async src="//jsfiddle.net/maulicule/wfeq1pj6/5/embed/"></script>
+	<script type="text/javascript">
+		mapboxgl.accessToken = 'pk.eyJ1IjoibWF1bGFzaHJlZSIsImEiOiJjajZobW5nMDMwbGJuMnFwbWhrcTVqY3owIn0.ZwLeMjChTSuISKisLqlVxA';
+// replace with your access token
+var map = new mapboxgl.Map({
+  container: 'map', // container id
+  style: 'mapbox://styles/maulashree/cj6kgd8bx74q62qpnso33bkpi', //your style id
+  center: [-0.119, 51.503], // starting position
+  zoom: 11.0 // starting zoom
+});
+var popup = new mapboxgl.Popup({
+  closeButton: false,
+  closeOnClick: false
+});
+map.on('mouseenter', 'b_and_m_points', function(e) {
+  // Change the cursor style as a UI indicator.
+  map.getCanvas().style.cursor = 'pointer';
+
+  // Populate the popup and set its coordinates
+  // based on the feature found.
+  popup.setLngLat(e.features[0].geometry.coordinates)
+    .setHTML("<span class='place'><b>"+e.features[0].properties["Place"]+"</b></span><br/><span class='note'><i>"+e.features[0].properties["Note"]+"</i><br/>Pic:</span><div class='images'><img src='"+e.features[0].properties["Link"]+"' height='200px' width='200px'></div>")
+    .addTo(map);
+});
+
+map.on('mouseleave', 'b_and_m_points', function() {
+map.getCanvas().style.cursor = '';
+popup.remove();
+});
+	</script>
+
+<style type="text/css">
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+#images{
+  object-fit:contain;
+}
+
+#note{
+  //font-family: 'Raleway', sans-serif;
+}
+</style>	
+
+</head>
+<body>
+	<div id='map'></div>
+</body>
+</html>
